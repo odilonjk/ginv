@@ -1,20 +1,19 @@
-package help
+package command
 
 import (
 	"log"
-
-	"github.com/odilonjk/gofolio/pkg/command"
 )
 
-type help struct{}
+// Help represents the help command
+type Help struct{}
 
-// New help command
-func New() command.Cmd {
-	return help{}
+// NewHelpCmd help command
+func NewHelpCmd() Help {
+	return Help{}
 }
 
 // Execute help command, printing all available commands
-func (h help) Execute() {
+func (h Help) Execute() {
 	log.Println("These are the available commands:")
 	log.Println("'ginv <view>' (TODO)")
 	log.Println("'ginv buy <ticket> <volume> <price> <currency> <broker>'")

@@ -4,11 +4,14 @@ import (
 	"log"
 	"os"
 
-	"github.com/odilonjk/gofolio/pkg/buy"
-	"github.com/odilonjk/gofolio/pkg/command"
-	"github.com/odilonjk/gofolio/pkg/help"
-	"github.com/odilonjk/gofolio/pkg/view"
+	"github.com/odilonjk/ginv/pkg/command"
 )
+
+// Cmd is the command to be executed
+type Cmd interface {
+	// Execute runs command
+	Execute()
+}
 
 func main() {
 
@@ -18,13 +21,13 @@ func main() {
 	}
 	typeStr := os.Args[1]
 
-	var c command.Cmd
+	var c Cmd
 	if "view" == typeStr {
-		c = view.New(os.Args[2:])
+		c = command.NewViewCmd(os.Args[2:])
 	} else if "buy" == typeStr {
-		c = buy.New(os.Args[2:])
+		c = command.NewBuyCmd(os.Args[2:])
 	} else if "help" == typeStr {
-		c = help.New()
+		c = command.NewHelpCmd()
 	}
 
 	c.Execute()

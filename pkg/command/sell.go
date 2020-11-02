@@ -1,23 +1,22 @@
-package sell
+package command
 
 import (
 	"log"
 	"strconv"
 	"strings"
-
-	"github.com/Rhymond/go-money"
-	"github.com/odilonjk/gofolio/pkg/command"
 )
 
-type sell struct {
-	Ticket string
-	Volume int
-	Price  *money.Money
-	Broker string
+// Sell keeps the sell order data
+type Sell struct {
+	Ticket   string
+	Volume   int
+	Price    int64
+	Currency string
+	Broker   string
 }
 
-// New sell command
-func New(args []string) command.Cmd {
+// NewSellCmd sell command
+func NewSellCmd(args []string) Sell {
 	if len(args) < 4 {
 		log.Println("You must enter the required arguments.")
 		log.Fatal("'ginv sell <ticket> <volume> <price> <currency> <broker>'")
@@ -37,15 +36,16 @@ func New(args []string) command.Cmd {
 		log.Fatalf("%d is not a valid price.", v)
 	}
 
-	return sell{
-		Ticket: args[0],
-		Volume: v,
-		Price:  money.New(p, args[3]),
-		Broker: strings.Join(args[4:], " "),
+	return Sell{
+		Ticket:   args[0],
+		Volume:   v,
+		Price:    p,
+		Currency: args[3],
+		Broker:   strings.Join(args[4:], " "),
 	}
 }
 
 // Execute the sell order for the ticket
-func (s sell) Execute() {
-	log.Printf("Executing sell order: %s %v", s.Ticket, s.Price.Display())
+func (s Sell) Execute() {
+	log.Printf("To be implemented.")
 }
