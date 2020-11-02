@@ -1,9 +1,12 @@
 package command
 
 import (
+	"fmt"
 	"log"
+	"strconv"
 	"strings"
 
+	"github.com/Rhymond/go-money"
 	"github.com/tidwall/buntdb"
 )
 
@@ -34,13 +37,12 @@ func (v View) Execute() {
 		log.Fatalf(err.Error())
 	}
 	defer db.Close()
-	db.CreateIndex("buys", "buy:*", buntdb.IndexString)
-
 	err = db.View(func(tx *buntdb.Tx) error {
 		i := investment{}
-		err := tx.Ascend("buys", func(k, v string) bool {
-			//FIXME - It's not working. It needs a map to work on multiple investments and fill based on key ID
-
+		log.Println("Current portfolio:")
+		log.Println("")
+		// TODO - needs the right prefix 'investment' to print the portfolio
+		err := tx.AscendKeys("buy:*", func(k, v string) bool {
 			if strings.Contains(k, "broker") {
 				i.broker = v
 			} else if strings.Contains(k, "ticket") {
@@ -53,10 +55,9 @@ func (v View) Execute() {
 				i.currency = v
 			}
 			if i.isFilled() {
-				log.Printf("Investiment: %v", i)
+				log.Printf("%v", i)
 				i = investment{}
 			}
-			log.Printf("key: %s - value: %s", k, v)
 			return true
 		})
 		return err
@@ -65,8 +66,19 @@ func (v View) Execute() {
 		log.Println("Error while reading records from database.")
 		log.Fatalf(err.Error())
 	}
+	log.Println("")
 }
 
 func (i investment) isFilled() bool {
 	return i.ticket != "" && i.broker != "" && i.currency != "" && i.price != "" && i.volume != ""
+}
+
+func (i investment) String() string {
+	p, err := strconv.ParseInt(i.price, 10, 64)
+	if err != nil {
+		log.Fatalln("Error while converting price value.")
+	}
+	m := money.New(p, i.currency)
+	return fmt.Sprintf("Ticket: %s, Price: %s, Volume: %s, Broker: %s",
+		i.ticket, m.Display(), i.volume, i.broker)
 }
