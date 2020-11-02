@@ -17,7 +17,7 @@ It currently have a basic support on every investiment that requires:
 
 You could use it to manage stocks, REITs, etc.
 
-## How it works?
+## How does it works?
 
 You just need to type on the terminal the command you want to execute.
 Example of a buy order: `ginv buy MSFT 50 22019 US TD Ameritrade`
