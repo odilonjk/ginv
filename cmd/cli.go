@@ -19,15 +19,17 @@ func main() {
 		log.Println("You must specify what command you want to execute.")
 		log.Fatal("Try 'ginv help'")
 	}
-	typeStr := os.Args[1]
 
 	var c Cmd
-	if "view" == typeStr {
+	switch os.Args[1] {
+	case "view":
 		c = command.NewViewCmd(os.Args[2:])
-	} else if "buy" == typeStr {
+	case "buy":
 		c = command.NewBuyCmd(os.Args[2:])
-	} else if "help" == typeStr {
+	case "help":
 		c = command.NewHelpCmd()
+	default:
+		log.Fatalf("%s is not a recognized command. Type 'ginv help' for more info.", os.Args[1])
 	}
 
 	c.Execute()
