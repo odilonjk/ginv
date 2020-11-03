@@ -16,15 +16,11 @@ type View struct {
 }
 
 type investment struct {
-	ticket   string
-	volume   string
-	price    string
-	currency string
-	broker   string
+	ticket, volume, price, currency, broker string
 }
 
-// NewViewCmd view command to print the portfolio
-func NewViewCmd(args []string) View {
+// NewView view command to print the portfolio
+func NewView(args []string) View {
 	return View{args}
 }
 

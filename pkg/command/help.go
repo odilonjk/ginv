@@ -7,8 +7,8 @@ import (
 // Help represents the help command
 type Help struct{}
 
-// NewHelpCmd help command
-func NewHelpCmd() Help {
+// NewHelp help command
+func NewHelp() Help {
 	return Help{}
 }
 

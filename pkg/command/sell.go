@@ -8,15 +8,13 @@ import (
 
 // Sell keeps the sell order data
 type Sell struct {
-	Ticket   string
-	Volume   int
-	Price    int64
-	Currency string
-	Broker   string
+	Ticket, Currency, Broker string
+	Volume                   int
+	Price                    int64
 }
 
-// NewSellCmd sell command
-func NewSellCmd(args []string) Sell {
+// NewSell sell command
+func NewSell(args []string) Sell {
 	if len(args) < 4 {
 		log.Println("You must enter the required arguments.")
 		log.Fatal("'ginv sell <ticket> <volume> <price> <currency> <broker>'")

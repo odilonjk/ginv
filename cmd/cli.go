@@ -23,11 +23,13 @@ func main() {
 	var c Cmd
 	switch os.Args[1] {
 	case "view":
-		c = command.NewViewCmd(os.Args[2:])
+		c = command.NewView(os.Args[2:])
 	case "buy":
-		c = command.NewBuyCmd(os.Args[2:])
+		c = command.NewBuy(os.Args[2:])
+	case "sell":
+		c = command.NewSell(os.Args[2:])
 	case "help":
-		c = command.NewHelpCmd()
+		c = command.NewHelp()
 	default:
 		log.Fatalf("%s is not a recognized command. Type 'ginv help' for more info.", os.Args[1])
 	}

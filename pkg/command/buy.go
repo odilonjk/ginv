@@ -13,15 +13,13 @@ type cents interface{}
 
 // Buy keeps the buy order data
 type Buy struct {
-	Ticket   string
-	Volume   int
-	Price    int64
-	Currency string
-	Broker   string
+	Ticket, Currency, Broker string
+	Volume                   int
+	Price                    int64
 }
 
-// NewBuyCmd buy command
-func NewBuyCmd(args []string) Buy {
+// NewBuy buy command
+func NewBuy(args []string) Buy {
 	if len(args) < 4 {
 		log.Println("You must enter the required arguments.")
 		log.Fatal("'ginv buy <ticket> <volume> <price> <currency> <broker>'")
